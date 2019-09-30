@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/product/layout::head">
+
+    <title>Spring Products</title>
+</head>
+<body>
+<h3>Products</h3>
+<p>
+    <a th:href="@{/create-product}">Add new Product</a>
+</p>
+<form th:action="@{/search-product}" method="post" enctype="multipart/form-data">
+    <p>
+        <input   type="text" name="search-by-name">
+        <input   type="submit" value="Search Product">
+    </p>
+</form>
+
+<!--<div class="notify">-->
+<!--    <div th:if="${success}">-->
+<!--        <span th:text="${success}"></span>-->
+<!--    </div>-->
+<!--</div>-->
+<table id = "products">
+    <thead>
+
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Create Date</th>
+        <th>Quantity</th>
+        <th>Description</th>
+        <th>Active</th>
+        <th>Image</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row, rowStat : ${productList}">
+        <td th:text="${row.getId()}"></td>
+        <td th:text="${row.getName()}"></td>
+        <td th:text="${row.getPrice()}"></td>
+        <td th:text="${row.getCreateDate()}"></td>
+        <td th:text="${row.getQuantity()}"></td>
+        <td th:text="${row.getActive()}"></td>
+        <td><img width="150px" height="150px" th:src="@{'/i/' + ${row.getImage()}}"/></td>
+        <td><a th:href="@{/product/{id}/edit(id=${row.getId()})}">edit</a></td>
+        <td><a th:href="@{/product/{id}/delete(id=${row.getId()})}">delete</a></td>
+        <td><a th:href="@{/product/{id}/view(id=${row.getId()})}">view</a></td>
+    </tr>
+    </tbody>
+</table>
+<footer th:replace="/product/layout :: footer"></footer>
+</body>
+</html>
